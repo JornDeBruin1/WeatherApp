@@ -111,42 +111,51 @@
 
     <!-- Weekly Weather -->
 
-  <div class="max-w-screen-md w-full py-12">
-    <div class="mx-8 text-white">
-      <h2 class="mb-4">5 Days forecast</h2>
-      <div
-        v-for="day in weatherData.daily.slice(0, 7)"
-        :key="day.dt"
-        class="flex items-center"
-      >
-        <p class="flex-1">
-          {{
-            new Date(day.dt * 1000).toLocaleDateString(
-              "en-us",
-              { weekday: "long" }
-            )
-          }}
-        </p>
-        <img
-          class="w-[50px] h-[50px] object-cover"
-          :src="getWeatherIcon(day.weather[0].icon)"
-          alt=""
-        />
-        <div class="flex gap-2 flex-1 justify-end">
+    <div class="max-w-screen-md w-full py-12">
+      <div class="mx-8 text-white">
+        <h2 class="mb-4">5 Days forecast</h2>
+        <div
+          v-for="day in weatherData.daily.slice(0, 7)"
+          :key="day.dt"
+          class="flex items-center"
+        >
+          <p class="flex-1">
+            {{
+              new Date(day.dt * 1000).toLocaleDateString(
+                "en-us",
+                { weekday: "long" }
+              )
+            }}
+          </p>
+          <img
+            class="w-[50px] h-[50px] object-cover"
+            :src="getWeatherIcon(day.weather[0].icon)"
+            alt=""
+          />
           <div class="flex gap-2 flex-1 justify-end">
-            <p>Highest: {{ getMaxTemperature(day) }}&deg;C</p>
-          <p>Lowest: {{ getMinTemperature(day) }}&deg;C</p>
+            <div class="flex gap-2 flex-1 justify-end">
+              <p>Highest: {{ getMaxTemperature(day) }}&deg;C</p>
+            <p>Lowest: {{ getMinTemperature(day) }}&deg;C</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+    <div 
+      class="flex items-center gap-2 py-12 text-white cursor-pointer
+      duration-150 hover:text-red-500"
+      @click="removeCity()"
+    >
+      <i class="fa-solid fa-trash "></i>
+      <p>Remove City</p>
+    </div>
   </div>
 </template>
 <script setup>
 import axios from "axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { reactive, onMounted } from "vue";
+import { stringify } from "qs";
 
 
 const getMaxTemperature = (day) => {
@@ -241,4 +250,19 @@ onMounted(() => {
     getWeatherData();
   }, 60 * 1000);
 });
+
+const router = useRouter();
+const removeCity = () => {
+  const cities = JSON.parse(localStorage.getItem('savedCities'));
+  const updatedCitites = cities.filter(
+    (city) => city.id !== route.query.id
+  );
+  localStorage.setItem(
+    "savedCities",
+    stringify(updatedCitites)
+  );
+  router.push({
+    name:"home",
+  });
+}
 </script>
