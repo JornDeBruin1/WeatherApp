@@ -134,8 +134,8 @@
           />
           <div class="flex gap-2 flex-1 justify-end">
             <div class="flex gap-2 flex-1 justify-end">
-              <p>Highest: {{ getMaxTemperature(day) }}&deg;C</p>
-            <p>Lowest: {{ getMinTemperature(day) }}&deg;C</p>
+              <p>Max: {{ getMaxTemperature(day) }}&deg;C</p>
+            <p>Min: {{ getMinTemperature(day) }}&deg;C</p>
             </div>
           </div>
         </div>
@@ -160,14 +160,12 @@ import { stringify } from "qs";
 
 const getMaxTemperature = (day) => {
   const maxTemperature = day.temperature.temp_max;
-  const celsius = maxTemperature - 273.15;
-  return Math.round(celsius);
+  return Math.round(maxTemperature);
 };
 
 const getMinTemperature = (day) => {
   const minTemperature = day.temperature.temp_min;
-  const celsius = minTemperature - 273.15;
-  return Math.round(celsius);
+  return Math.round(minTemperature);
 };
 
 const route = useRoute();
@@ -192,7 +190,8 @@ const formattedTime = (currentTime) => {
 
 const getWeatherData = async () => {
   try {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${route.query.lat}&lon=${route.query.lng}&appid=12682e99547b67e008b080163c026ae8`;
+     
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${route.query.lat}&lon=${route.query.lng}&appid=12682e99547b67e008b080163c026ae8&units=metric`;
     const response = await axios.get(apiUrl);
 
     if (response.data && response.data.list && response.data.list.length > 0) {
@@ -202,7 +201,7 @@ const getWeatherData = async () => {
       weatherData.currentTime = currentDate.getTime();
       weatherData.hourly = response.data.list.map((hour) => {
         const temperatureInKelvin = hour.main.temp;
-        const temperatureInCelsius = temperatureInKelvin - 273.15;
+        const temperatureInCelsius = temperatureInKelvin;
         const currentTime = hour.dt * 1000;
 
         return {
@@ -216,6 +215,9 @@ const getWeatherData = async () => {
       const dailyData = response.data.list.filter((hour) =>
         hour.dt_txt.includes("12:00:00")
       );
+
+       // flicker delay
+       await new Promise((res) => setTimeout(res, 1000));
 
       weatherData.daily = dailyData.map((day) => {
         return {
