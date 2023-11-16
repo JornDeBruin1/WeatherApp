@@ -15,6 +15,7 @@
             <div class="flex gap-2">
             <span class="text-xs">
                 H:
+                
                 {{ Math.round(city.weather.main.temp_max) }} &deg; C
             </span>
             <span class="text-xs">
