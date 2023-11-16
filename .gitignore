@@ -27,4 +27,4 @@ coverage
 *.sln
 *.sw?
 
-../assets/apikey
+/src/assets/apikey.js

@@ -91,7 +91,6 @@
           </p>
           <img
             class="w-[50px] h-[50px] object-cover"
-            v-if="day.weather && day.weather[0] && day.weather[0].icon"
             :src="getWeatherIcon(day.weather[0].icon)"
             alt=""
           />
@@ -286,15 +285,15 @@ onMounted(() => {
 const router = useRouter();
 const removeCity = () => {
   const cities = JSON.parse(localStorage.getItem('savedCities'));
-  const updatedCitites = cities.filter(
+  const updatedCities = cities.filter(
     (city) => city.id !== route.query.id
   );
   localStorage.setItem(
     "savedCities",
-    stringify(updatedCitites)
+    JSON.stringify(updatedCities)
   );
   router.push({
-    name:"home",
+    name: "home",
   });
-}
+};
 </script>
