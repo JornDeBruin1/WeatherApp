@@ -1,24 +1,30 @@
 <template>
     <header class="sticky top-0 bg-weather-primary shadow-lg z-10">
       <nav class="container flex flex-col sm:flex-row items-center gap-4 text-white py-6">
+        <div class="flex items-center gap-3 ">
         <RouterLink :to="{ name: 'home' }">
           <div class="flex items-center gap-3">
             <i class="fa-solid fa-sun text-2xl"></i>
             <p class="text-2xl">The Local Weather</p>
           </div>
         </RouterLink>
-  
-        <div class="flex gap-3 flex-1 justify-end">
-          <i
-            class="fa-solid fa-circle-info text-xl hover:text-weather-secondary duration-150 cursor-pointer"
-            @click="toggleModal"
-          ></i>
-          <i
-            v-if="route.query.preview"
-            class="fa-solid fa-plus text-xl hover:text-weather-secondary duration-150 cursor-pointer"
-            @click="addCity"
-          ></i>
-        </div>
+        
+      </div>
+
+      <div class="flex gap-3 flex-1 justify-end">
+        <RouterLink :to="{ name: 'home' }">
+          <i  v-if="!isHomeRoute" class="fa-solid fa-arrow-left text-xl hover:text-weather-secondary duration-150 cursor-pointer" @click="goBack"></i>
+        </RouterLink>
+        <i
+          class="fa-solid fa-circle-info text-xl hover:text-weather-secondary duration-150 cursor-pointer"
+          @click="toggleModal"
+        ></i>
+        <i
+          v-if="route.query.preview"
+          class="fa-solid fa-plus text-xl hover:text-weather-secondary duration-150 cursor-pointer"
+          @click="addCity"
+        ></i>
+      </div>
         <BaseModal :modalActive="modalActive" @close-modal="toggleModal">
           <div class="text-black">
             <h1 class="text-2xl mb-1">About:</h1>
@@ -51,7 +57,7 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { uid } from 'uid';
   import { RouterLink, useRouter, useRoute } from 'vue-router';
   import BaseModal from './BaseModal.vue';
@@ -59,6 +65,10 @@
   const savedCities = ref([]);
   const route = useRoute();
   const router = useRouter();
+
+  const isHomeRoute = computed(() => router.currentRoute.value.name === 'home');
+
+  
   
   const addCity = () => {
   // Ensure that required route parameters and query values are present
@@ -103,8 +113,12 @@
 };
 
   
-  const modalActive = ref(null);
-  const toggleModal = () => {
-    modalActive.value = !modalActive.value;
-  };
-  </script>
+const modalActive = ref(null);
+const toggleModal = () => {
+  modalActive.value = !modalActive.value;
+};
+
+const goBack = () => {
+  router.push({ name: 'home' });
+};
+</script>
