@@ -24,7 +24,7 @@
     </div>
   </template>
   
-  <script setup>
+  <script setup>  
   defineProps({
     city: {
       type: Object,
