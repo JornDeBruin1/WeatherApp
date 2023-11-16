@@ -156,6 +156,7 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import { reactive, onMounted } from "vue";
 import { stringify } from "qs";
+import openWeatherKey from '../assets/apiKey'
 
 
 const getMaxTemperature = (day) => {
@@ -191,7 +192,7 @@ const formattedTime = (currentTime) => {
 const getWeatherData = async () => {
   try {
      
-    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${route.query.lat}&lon=${route.query.lng}&appid=12682e99547b67e008b080163c026ae8&units=metric`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${route.query.lat}&lon=${route.query.lng}&appid=${openWeatherKey.apiKeyOpenWeather()}&units=metric`;
     const response = await axios.get(apiUrl);
 
     if (response.data && response.data.list && response.data.list.length > 0) {
