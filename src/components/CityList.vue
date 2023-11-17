@@ -20,11 +20,11 @@ const router = useRouter();
 const getCities = async () => {
   try {
     const storedCities = localStorage.getItem('savedCities');
-    console.log('Content to be parsed:', storedCities);
+    // console.log('Content to be parsed:', storedCities);
 
     if (storedCities) {
       const citiesArray = JSON.parse(storedCities);
-      console.log('Parsed citiesArray:', citiesArray);
+      // console.log('Parsed citiesArray:', citiesArray);
 
       savedCities.value = citiesArray;
 
@@ -47,7 +47,7 @@ const getCities = async () => {
         }
       });
 
-      console.log('Cities with weather data:', savedCities.value);
+      // console.log('Cities with weather data:', savedCities.value);
     } else {
       console.error('No saved cities found.');
     }
