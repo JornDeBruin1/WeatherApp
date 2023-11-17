@@ -13,6 +13,7 @@ import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import CityCard from './CityCard.vue';
+import apiKey from '../assets/apiKey';
 
 const savedCities = ref([]);
 const router = useRouter();
@@ -31,7 +32,7 @@ const getCities = async () => {
       const request = savedCities.value.map((city) => {
         if (city && city.coords && city.coords.lat && city.coords.lng) {
           return axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=12682e99547b67e008b080163c026ae8&units=metric`
+            `https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=${apiKey.apiKeyOpenWeather()}&units=metric`
           );
         }
         return Promise.resolve(null); // Return a resolved promise for skipped requests
