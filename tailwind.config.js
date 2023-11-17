@@ -5,6 +5,7 @@ module.exports = {
       colors:{
         "weather-primary": "#00668A",
         "weather-secondary": "#004E71",
+        "weather-tertiary": "#037ba3"
       },
     },
   fontFamily: {
@@ -19,6 +20,8 @@ module.exports = {
       md: "768px",
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
 
