@@ -1,6 +1,4 @@
 import firebase from 'firebase'
-import { ref, onUnmounted } from 'vue'
-
 const config = {
     apiKey: "AIzaSyBIIfRelpWkHS0re_7F16rbrHRGh_3nyw4",
     authDomain: "weather-app-6d8f2.firebaseapp.com",
