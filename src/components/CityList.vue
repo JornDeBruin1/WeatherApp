@@ -1,14 +1,14 @@
 <template>
-    <div v-for="city in citiesArray" :key="city.id">
-      <CityCard :city="city" @click="goToCityView(city)" />
-    </div>
-  
-    <p v-if="citiesArray.length === 0">
-      No locations added. To start tracking a location, search in the field above.
-    </p>
-  </template>
-  
-  <script setup>
+  <div v-for="city in citiesArray" :key="city.id">
+    <CityCard :city="city" @click="goToCityView(city)" />
+  </div>
+
+  <p v-if="citiesArray.length === 0">
+    No locations added. To start tracking a location, search in the field above.
+  </p>
+</template>
+
+<script setup>
 import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -39,8 +39,6 @@ const getCities = async () => {
       });
 
       const weatherData = await Promise.all(request);
-
-
 
       weatherData.forEach((value, index) => {
         if (value) {
